@@ -1,4 +1,4 @@
-Table 1 Classification
+### Table 1 Classification
 | Dataset | MoVE | TS2Vec | TimesNet | PatchTST | TSPulse | VQShape |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | ArticularyWordRecognition | **0.993** | 0.987 | 0.953 | 0.938 | 0.98 | 0.987 |
