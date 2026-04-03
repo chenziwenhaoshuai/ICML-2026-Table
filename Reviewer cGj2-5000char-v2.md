@@ -1,28 +1,41 @@
-We deeply appreciate your constructive feedback. We have addressed all your concerns and conducted extensive new experiments. Due to space constraints, we present the core results here. **All comprehensive data tables are provided in our anonymous GitHub repository: [Anonymous Table URL](https://anonymous.4open.science/r/ICML-2026-Table-9F0D/Reviewer%20cGj2-table.md).**
+Table 1 Classification
+| Dataset | MoVE | TS2Vec | TimesNet | PatchTST | TSPulse | VQShape |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| ArticularyWordRecognition | **0.993** | 0.987 | 0.953 | 0.938 | 0.98 | 0.987 |
+| AtrialFibrillation | 0.333 | 0.2 | 0.507 | 0.467 | 0.467 | **0.52** |
+| BasicMotions | 0.8 | 0.975 | 0.965 | 0.560 | **1.0** | 0.885 |
+| CharacterTrajectories | 0.970 | **0.995** | 0.980 | 0.859 | 0.987 | 0.962 |
+| Cricket | **0.986** | 0.972 | 0.839 | 0.883 | 0.917 | 0.975 |
+| DuckDuckGeese | 0.24 | 0.68 | 0.404 | N/A | **0.72** | 0.344 |
+| EigenWorms | 0.572 | **0.847** | N/A | 0.415 | N/A | N/A |
+| Epilepsy | **0.978** | 0.964 | 0.836 | 0.565 | 0.971 | 0.755 |
+| ERing | 0.907 | 0.874 | 0.914 | 0.872 | 0.937 | **0.947** |
+| EthanolConcentration | 0.250 | **0.308** | 0.300 | 0.263 | 0.247 | 0.306 |
+| FaceDetection | 0.678 | 0.501 | **0.686** | 0.559 | 0.675 | 0.653 |
+| FingerMovements | 0.47 | 0.48 | **0.608** | 0.564 | 0.53 | 0.616 |
+| HandMovementDirection | 0.459 | 0.338 | 0.416 | 0.568 | **0.649** | 0.514 |
+| Handwriting | 0.090 | **0.515** | 0.239 | 0.112 | 0.215 | 0.266 |
+| Heartbeat | **0.756** | 0.683 | 0.739 | 0.724 | 0.702 | 0.632 |
+| InsectWingbeat | N/A | 0.466 | 0.593 | 0.276 | **0.723** | NA |
+| JapaneseVowels | 0.916 | **0.984** | 0.972 | 0.876 | 0.976 | 0.941 |
+| LSST | 0.490 | **0.537** | 0.406 | 0.315 | 0.518 | 0.511 |
+| Libras | 0.65 | **0.867** | 0.806 | 0.642 | 0.767 | 0.808 |
+| MotorImagery | **0.660** | 0.51 | 0.614 | 0.600 | 0.58 | 0.638 |
+| NATOPS | 0.811 | **0.928** | 0.904 | 0.730 | 0.878 | 0.804 |
+| PEMS-SF | 0.757 | 0.682 | **0.857** | 0.764 | 0.855 | 0.85 |
+| PenDigits | 0.972 | **0.989** | 0.981 | 0.961 | 0.969 | 0.973 |
+| PhonemeSpectra | 0.119 | **0.233** | 0.119 | 0.033 | 0.156 | 0.087 |
+| RacketSports | 0.796 | 0.855 | 0.855 | 0.738 | **0.901** | 0.838 |
+| SelfRegulationSCP1 | **0.914** | 0.812 | 0.895 | 0.835 | 0.836 | 0.889 |
+| SelfRegulationSCP2 | 0.505 | 0.578 | 0.559 | 0.559 | 0.511 | **0.586** |
+| SpokenArabicDigits | 0.973 | **0.988** | 0.987 | 0.748 | 0.984 | 0.976 |
+| StandWalkJump | 0.4 | 0.467 | 0.600 | 0.507 | **0.733** | 0.707 |
+| UWaveGestureLibrary | 0.825 | **0.906** | 0.812 | 0.778 | 0.881 | 0.879 |
 
-**Q1: Test Leakage (Crucial Clarification)**
-TimeVQGAN acts strictly as an **unsupervised tokenizer**, akin to BPE in LLMs or VQGAN in CV, which are routinely pretrained on full datasets without leakage concerns. It learns morphological primitives via self-reconstruction, never accessing downstream task targets. Furthermore, the overlapping datasets constitute a negligible **0.089%** of the 48M sample 300B corpus, which is overwhelmingly dominated by synthetic and weather data. 
+### Table 2: Imputation
+| Dataset       | MoVE MSE     | MoVE MAE     | TimeMixer++ MSE | TimeMixer++ MAE |
+| :------------ | :----------- | :----------- | :-------------- | :-------------- |
+| **ETT (AVG)** | **0.042**    | **0.127**    | <u>0.055</u>    | <u>0.154</u>    |
+| **ECL**       | <u>0.088</u> | <u>0.204</u> | **0.071**       | **0.172**       |
+| **Weather**   | **0.033**    | <u>0.060</u> | <u>0.034</u>    | **0.055**       |
 
-To definitively prove our SOTA results do not stem from leakage, we retrained TimeVQGAN entirely from scratch on a strictly **decontaminated Leak-Free corpus**. Downstream MoVE performance remained identical:
-*   **ECL MSE/MAE:** Orig 0.175/0.268 vs. Leak-Free 0.175/0.269
-*   **Traffic MSE/MAE:** Orig 0.412/0.279 vs. Leak-Free 0.412/0.279
-*   **M4 Avg sMAPE:** Orig 13.54 vs. Leak-Free 13.53
-This empirically guarantees our evaluation is completely fair and robust.
-
-**Q2: Expanded SOTA Baselines & Benchmarks**
-*   **VQ Baselines (TOTEM):** Results highlight an architectural trade-off. TOTEM optimized by pure MSE acts as a low-pass filter, favoring smooth data like ECL and Weather. Conversely, MoVE's adversarial training captures complex high-frequency volatility, dominating dynamic data. For example, MoVE achieves **0.027** vs TOTEM's 0.054 on ETTm1 Imputation Avg MSE, and **96.99** vs 95.87 on PSM Anomaly Detection F1.
-*   **LLM Baselines (Time-LLM, GPT4TS):** In forecasting, MoVE matches or beats GPT4TS and closely trails Time-LLM. Crucially, Time-LLM relies on continuous patching and a massive **7B LLaMA**, whereas MoVE uses a standard **100M GPT-2**, operating at **~1/70th the size**. Furthermore, because MoVE outputs true discrete tokens, it bridges time series to standard categorical vocabularies, unlocking step-by-step autoregressive generation that continuous-patching LLMs cannot natively perform.
-*   **Forecasting & Imputation:** MoVE significantly outperforms TimeMixer++ in Imputation, achieving **0.042** vs 0.055 Avg ETT MSE. In Forecasting, MoVE matches or beats both TimeMixer++ and pre-trained TinyTimeMixers, winning all ETTm1 and Traffic horizons.
-*   **Classification:** We expanded our evaluation to all 30 UEA datasets to eliminate selection bias, comparing against TS2Vec, TimesNet, PatchTST, TSPulse, and VQShape. MoVE achieves SOTA average performance across the full suite.
-*   **Anomaly Detection:** On the rigorous TSB-AD benchmark, MoVE strongly outperforms TimesNet and AutoEncoder across metrics, achieving **0.253** vs 0.190 in Univariate AUC-PR, and **0.297** vs 0.250 in Standard-F1 against AutoEncoder.
-
-**Q3: Limited Criteria in Ablations**
-We agree that MSE alone does not perfectly reflect generative token quality. We expanded our 128-dataset ablations to include **FID and Inception Score (IS)**. Results confirm our adversarial setup perfectly aligns reconstruction fidelity with generative quality, as optimal configurations maximize all metrics jointly. For Quantization Block Size, size 4 is the sweet spot with 0.089 MSE and 35.6 FID. Expanding to 16 sharply degrades semantic quality to 0.129 MSE and 65.1 FID. Additionally, a 3-layer discriminator yields the best joint performance, proving a balanced discriminator is essential for capturing the true data distribution.
-
-**Q4: TimeMoE Backbone Version**
-We utilize **TimeMoE-Base**. Its MoE architecture perfectly balances high capacity with efficiency. While total parameters are ~100M, the active parameters per token are only **~50M**.
-
-**Q5: High-Dim VQ Stability & Intuition**
-High dimensionality ($d=768$) prevents severe information bottlenecks, preserving the rich, multi-domain semantics extracted from the massive 300B corpus. Low-dim bottlenecks like $d=64$ caused "spectral bias" in early tests, failing to capture high-frequency transients. To prevent codebook collapse and ensure stability in high-dim space, we apply **$\ell_2$ normalization** to both encoder outputs and embeddings. This projects features to a unit hypersphere for stable cosine similarity lookup. We also utilize standard **EMA** for robust codebook updates.
-
-We hope these comprehensive SOTA comparisons, rigorous decontamination proofs, and expanded multi-metric ablations thoroughly address your concerns. If our rebuttal and additional experiments have resolved your doubts, we respectfully request you to consider raising the score.
